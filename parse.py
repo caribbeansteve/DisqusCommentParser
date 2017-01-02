@@ -16,12 +16,12 @@ def printCSV(table):
 	filename = "output.csv"
 	with open(filename, 'wb') as f:
 		cWriter = csv.writer(f)
-		row = ["Post ID","Thread ID","Parent ID","Email","Username","IP Address","Date","Content"]
+		row = ["Thread ID","Post ID","Parent ID","Email","Username","IP Address","Date","Content"]
 		cWriter.writerow([unicode(s).encode("utf-8") for s in row])
 		for key in table:
 			keyList = table[key]
 			for item in keyList:
-				row = [item.post, item.threadID , item.parentID, item.authEmail, item.authUser, item.authIP, item.date, item.content ]
+				row = [item.threadID , item.post,  item.parentID, item.authEmail, item.authUser, item.authIP, item.date, item.content ]
 				cWriter.writerow([unicode(s).encode("utf-8") for s in row])
 
 
