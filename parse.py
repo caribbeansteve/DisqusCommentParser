@@ -6,8 +6,11 @@ ns = {'disqus': 'http://disqus.com',
 def createTable(root):
 	idDictionary = {}
 	for thread in root.findall('disqus:thread',ns):
-		if not thread.attrib[thread.attrib.keys()[0]] in idDictionary:
+		url = thread.find('disqus:link', ns).text
+		keylist = list(thread.attrib.keys())
+		if not thread.attrib[keylist[0]] in idDictionary:
 			idDictionary[thread.attrib[thread.attrib.keys()[0]]] = []
+			idDictionary[thread.attrib[thread.attrib.keys()[0]]].append(Post('-', thread.attrib[thread.attrib.keys()[0]], '-', '-', '-', '-', '-', url))
 	return idDictionary
 
 def printCSV(table):
@@ -20,10 +23,10 @@ def printCSV(table):
 		cWriter.writerow([unicode(s).encode("utf-8") for s in row])
 		for key in table:
 			keyList = table[key]
+			thread = []
 			for item in keyList:
-				row = [item.threadID , item.post,  item.parentID, item.authEmail, item.authUser, item.authIP, item.date, item.content ]
+				row = [item.threadID , item.post,  item.parentID, item.authEmail, item.authUser, item.authIP, item.date, item.content, keyList[0].content]
 				cWriter.writerow([unicode(s).encode("utf-8") for s in row])
-
 
 
 def buildDictionary(root, table):
